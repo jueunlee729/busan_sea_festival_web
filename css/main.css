@@ -323,3 +323,176 @@ button{cursor:pointer}
   .ticket-option{grid-template-columns:34px 46px 1fr}
   .ticket-badge{width:46px;height:46px}
 }
+
+
+/* ===== HOME HERO REFINEMENT =====
+   HOME only. Sub pages keep their existing hero styles. */
+.site-header{
+  height:88px;
+}
+.header-inner{
+  height:88px;
+  gap:24px;
+}
+.brand--home{
+  width:112px;
+  flex:0 0 112px;
+}
+.brand--home img{
+  width:112px;
+  height:54px;
+  object-fit:cover;
+  object-position:left center;
+  border-radius:0;
+}
+.gnb{
+  gap:38px;
+  font-size:13px;
+  letter-spacing:.015em;
+}
+.header-actions .btn{
+  min-height:40px;
+  padding:0 21px;
+  font-size:12px;
+}
+.home-hero{
+  min-height:560px;
+  align-items:center;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255,250,244,.78) 0%,
+      rgba(255,247,238,.58) 24%,
+      rgba(255,244,231,.24) 43%,
+      rgba(255,255,255,0) 62%
+    ),
+    url("../assets/hero-sunset.jpg") center 48% / cover no-repeat;
+}
+.home-hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.08),rgba(9,38,71,.04)),
+    linear-gradient(90deg,rgba(255,255,255,.12),transparent 48%);
+  pointer-events:none;
+}
+.home-hero .hero-content{
+  padding-top:72px;
+}
+.home-hero-copy{
+  width:min(430px,46vw);
+}
+.home-hero .year{
+  margin:0 0 12px;
+  font-size:25px;
+  line-height:1;
+  letter-spacing:.01em;
+}
+.home-hero h1{
+  max-width:410px;
+  font-size:60px;
+  line-height:.98;
+  letter-spacing:-.045em;
+  color:#123B72;
+  text-shadow:0 1px 0 rgba(255,255,255,.18);
+}
+.home-hero-tagline{
+  margin:22px 0 8px !important;
+  font-size:14px;
+  line-height:1.6;
+  font-weight:800 !important;
+  color:#123B72 !important;
+}
+.home-hero .hero-meta{
+  margin-top:14px;
+  font-size:16px;
+  line-height:1.4;
+}
+.home-hero-place{
+  margin:7px 0 0 !important;
+  font-size:12px;
+  font-weight:700 !important;
+}
+.home-hero .hero-cta{
+  margin-top:28px;
+}
+.home-hero .hero-cta .btn{
+  min-height:42px;
+  padding:0 20px;
+  font-size:12px;
+  box-shadow:0 10px 22px rgba(18,59,114,.14);
+}
+
+/* Slightly calmer transition into the first content block */
+.home-hero + .quick-nav{
+  padding-top:28px;
+  padding-bottom:32px;
+}
+.home-hero + .quick-nav .quick-grid{
+  box-shadow:0 10px 30px rgba(18,59,114,.035);
+}
+
+@media (max-width:1024px){
+  .home-hero{
+    min-height:540px;
+    background-position:58% 48%;
+  }
+  .home-hero-copy{
+    width:min(410px,52vw);
+  }
+  .home-hero h1{
+    font-size:54px;
+  }
+}
+@media (max-width:768px){
+  .site-header,
+  .header-inner{
+    height:68px;
+  }
+  .brand--home{
+    width:88px;
+    flex-basis:88px;
+  }
+  .brand--home img{
+    width:88px;
+    height:42px;
+  }
+  .home-hero{
+    min-height:560px;
+    align-items:flex-end;
+    background-position:66% center;
+  }
+  .home-hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg,rgba(255,255,255,.04) 20%,rgba(255,245,232,.82) 100%);
+    pointer-events:none;
+  }
+  .home-hero .hero-content{
+    padding:90px 0 48px;
+    width:min(100% - 28px,var(--max));
+  }
+  .home-hero-copy{
+    position:relative;
+    z-index:2;
+    width:100%;
+    max-width:390px;
+  }
+  .home-hero h1{
+    font-size:46px;
+  }
+}
+@media (max-width:480px){
+  .home-hero{
+    min-height:520px;
+    background-position:70% center;
+  }
+  .home-hero h1{
+    font-size:42px;
+  }
+  .home-hero .year{
+    font-size:22px;
+  }
+}
