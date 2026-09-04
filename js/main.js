@@ -20,6 +20,99 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Home program slider: pointer drag, touch swipe and page indicators
+  const programSlider = document.querySelector("[data-program-slider]");
+  if(programSlider){
+    const viewport = programSlider.querySelector("[data-program-viewport]");
+    const dots = [...programSlider.querySelectorAll("[data-program-page]")];
+    let activePage = 0;
+    let pointerId = null;
+    let startX = 0;
+    let startScrollLeft = 0;
+    let didDrag = false;
+    let suppressLinkClick = false;
+    let scrollFrame = null;
+
+    const pageCount = dots.length;
+    const pageWidth = () => viewport.clientWidth;
+    const setActivePage = page => {
+      activePage = Math.max(0, Math.min(pageCount - 1, page));
+      dots.forEach((dot, index) => {
+        const isActive = index === activePage;
+        dot.classList.toggle("is-active", isActive);
+        dot.setAttribute("aria-current", String(isActive));
+      });
+    };
+    const goToPage = (page, behavior = "smooth") => {
+      const nextPage = Math.max(0, Math.min(pageCount - 1, page));
+      viewport.scrollTo({left:nextPage * pageWidth(), behavior});
+      setActivePage(nextPage);
+    };
+
+    viewport.addEventListener("pointerdown", event => {
+      if(event.pointerType === "mouse" && event.button !== 0) return;
+      pointerId = event.pointerId;
+      startX = event.clientX;
+      startScrollLeft = viewport.scrollLeft;
+      didDrag = false;
+      viewport.setPointerCapture(pointerId);
+      viewport.classList.add("is-dragging");
+    });
+
+    viewport.addEventListener("pointermove", event => {
+      if(event.pointerId !== pointerId) return;
+      const distance = event.clientX - startX;
+      if(Math.abs(distance) > 6) didDrag = true;
+      viewport.scrollLeft = startScrollLeft - distance;
+      if(didDrag) event.preventDefault();
+    });
+
+    const finishDrag = event => {
+      if(event.pointerId !== pointerId) return;
+      const distance = event.clientX - startX;
+      const startPage = Math.round(startScrollLeft / pageWidth());
+      const targetPage = Math.abs(distance) > 45
+        ? startPage + (distance < 0 ? 1 : -1)
+        : Math.round(viewport.scrollLeft / pageWidth());
+
+      suppressLinkClick = didDrag;
+      if(viewport.hasPointerCapture(pointerId)) viewport.releasePointerCapture(pointerId);
+      pointerId = null;
+      viewport.classList.remove("is-dragging");
+      goToPage(targetPage);
+      window.setTimeout(() => { suppressLinkClick = false; }, 350);
+    };
+
+    viewport.addEventListener("pointerup", finishDrag);
+    viewport.addEventListener("pointercancel", finishDrag);
+    viewport.addEventListener("click", event => {
+      if(suppressLinkClick && event.target.closest("a")){
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    }, true);
+
+    viewport.addEventListener("scroll", () => {
+      if(scrollFrame) cancelAnimationFrame(scrollFrame);
+      scrollFrame = requestAnimationFrame(() => {
+        setActivePage(Math.round(viewport.scrollLeft / pageWidth()));
+      });
+    }, {passive:true});
+
+    viewport.addEventListener("keydown", event => {
+      if(event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+      event.preventDefault();
+      goToPage(activePage + (event.key === "ArrowRight" ? 1 : -1));
+    });
+
+    dots.forEach(dot => {
+      dot.addEventListener("click", () => goToPage(Number(dot.dataset.programPage)));
+    });
+
+    window.addEventListener("resize", () => goToPage(activePage, "auto"));
+    setActivePage(0);
+  }
+
   // Program category filter
   const categoryBtns = document.querySelectorAll("[data-program-filter]");
   const programCards = document.querySelectorAll("[data-program-category]");
