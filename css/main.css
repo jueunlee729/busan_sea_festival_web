@@ -37,8 +37,7 @@ button{cursor:pointer}
 .section--tight{padding:64px 0}
 .section-title{font-size:34px;line-height:1.15;margin:0 0 38px;color:var(--navy);font-weight:800}
 .section-title::after{
-  content:"";display:block;width:48px;height:8px;margin-top:10px;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='8'%3E%3Cpath d='M0 5 C8 0 16 10 24 5 C32 0 40 10 48 5' fill='none' stroke='%232679EE' stroke-width='2'/%3E%3C/svg%3E") center/contain no-repeat
+  display:none;
 }
 .eyebrow{font-size:13px;font-weight:800;color:var(--blue);letter-spacing:.02em}
 .lead{font-size:18px;color:var(--muted);max-width:720px}
@@ -706,10 +705,13 @@ button{cursor:pointer}
   .home-hero .year{
     font-size:22px;
   }
-  .home-hero + .quick-nav .quick-grid{grid-template-columns:repeat(5,1fr);gap:2px;padding:6px 4px}
-  .home-hero + .quick-nav .quick-item{border:0!important;min-height:88px;padding:10px 3px}
-  .home-hero + .quick-nav .quick-icon{width:32px;height:32px}
+  .home-hero + .quick-nav .quick-grid{grid-template-columns:repeat(3,1fr);gap:6px 2px;padding:8px 6px}
+  .home-hero + .quick-nav .quick-item{border:0!important;min-height:92px;padding:11px 5px}
+  .home-hero + .quick-nav .quick-item:nth-child(4){grid-column:1;margin-left:50%}
+  .home-hero + .quick-nav .quick-item:nth-child(5){grid-column:2;margin-left:50%}
+  .home-hero + .quick-nav .quick-icon{width:34px;height:34px;margin-bottom:7px}
   .home-hero + .quick-nav .quick-icon svg{width:23px;height:23px}
+  .home-hero + .quick-nav .quick-item span{font-size:11px;line-height:1.35;white-space:nowrap}
   .home-hero + .quick-nav .quick-item small{display:none}
   .home-intro .section-title{font-size:31px}
   .home-intro .lead{font-size:14px}
