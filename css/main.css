@@ -13,6 +13,10 @@
   --border:#E2E8F0;
   --surface:#F8FAFC;
   --white:#fff;
+  --coral: #F45667;      /* 메인 포인트 */
+  --orange: #FC6B01;     /* 버튼, 중요 일정, 강조 */
+  --navy: #1B2B4C;       /* 제목, 본문 주요 텍스트 */
+  --blue: #4A90E2;       /* 링크, 서브 포인트 */
   --max:1200px;
   --radius:18px;
   --shadow:0 12px 32px rgba(18,59,114,.08);
