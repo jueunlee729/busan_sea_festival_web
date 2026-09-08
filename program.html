@@ -12,7 +12,6 @@
   <div class="header-inner">
     <a class="brand brand--home" href="index.html">
       <img src="assets/header-logo.png" alt="2026 부산바다축제 로고">
-      
     </a>
     <nav class="gnb"><a class="" href="festival.html">FESTIVAL</a><a class="active" href="program.html">PROGRAM</a><a class="" href="guide.html">GUIDE</a><a class="" href="news.html">NEWS</a></nav>
     <div class="header-actions">
@@ -49,9 +48,9 @@
 <section class="section">
   <div class="container">
     <h2 class="section-title">주요 프로그램</h2>
-    <div class="grid-3">
+    <div class="grid-3" id="program-list" data-program-list>
 
-      <article class="card program-card" data-program-category="concert">
+      <article class="card program-card" id="program-1" data-program-category="concert">
         <img src="assets/program-1.jpg" alt="">
         <div class="body">
           <div class="eyebrow">공연 프로그램</div>
@@ -59,7 +58,7 @@
           <div class="meta"><span>▣ 8.7 - 8.9</span><span>⌖ 메인 해변</span></div>
         </div>
       </article>
-      <article class="card program-card" data-program-category="sunset">
+      <article class="card program-card" id="program-2" data-program-category="sunset">
         <img src="assets/program-2.jpg" alt="">
         <div class="body">
           <div class="eyebrow">선셋 이벤트</div>
@@ -67,15 +66,15 @@
           <div class="meta"><span>▣ 8.7 - 8.9</span><span>⌖ 메인 해변</span></div>
         </div>
       </article>
-      <article class="card program-card" data-program-category="experience">
-        <img src="assets/프로그램/헤나.png" alt="">
+      <article class="card program-card" id="program-3" data-program-category="experience">
+        <img src="assets/program-3.jpg" alt="">
         <div class="body">
           <div class="eyebrow">체험 프로그램</div>
           <h3>비치 요가</h3><p>다대포 바다를 배경으로 즐기는 특별한 프로그램</p>
           <div class="meta"><span>▣ 8.7 - 8.9</span><span>⌖ 메인 해변</span></div>
         </div>
       </article>
-      <article class="card program-card" data-program-category="experience">
+      <article class="card program-card" id="program-4" data-program-category="experience">
         <img src="assets/program-4.jpg" alt="">
         <div class="body">
           <div class="eyebrow">체험 프로그램</div>
@@ -83,7 +82,7 @@
           <div class="meta"><span>▣ 8.7 - 8.9</span><span>⌖ 메인 해변</span></div>
         </div>
       </article>
-      <article class="card program-card" data-program-category="food">
+      <article class="card program-card" id="program-5" data-program-category="food">
         <img src="assets/program-5.jpg" alt="">
         <div class="body">
           <div class="eyebrow">푸드 마켓</div>
@@ -91,7 +90,7 @@
           <div class="meta"><span>▣ 8.7 - 8.9</span><span>⌖ 메인 해변</span></div>
         </div>
       </article>
-      <article class="card program-card" data-program-category="night">
+      <article class="card program-card" id="program-6" data-program-category="night">
         <img src="assets/program-6.jpg" alt="">
         <div class="body">
           <div class="eyebrow">야간 프로그램</div>
@@ -99,6 +98,57 @@
           <div class="meta"><span>▣ 8.7 - 8.9</span><span>⌖ 메인 해변</span></div>
         </div>
       </article>
+      <article class="card program-card" id="program-7" data-program-category="concert" data-program-extra hidden>
+        <img src="assets/program-1.jpg" alt="">
+        <div class="body">
+          <div class="eyebrow">공연 프로그램</div>
+          <h3>비치 오프닝</h3><p>여름 바다에서 시작하는 특별한 무대</p>
+          <div class="meta"><span>▣ 8.7</span><span>⌖ 메인 해변</span></div>
+        </div>
+      </article>
+      <article class="card program-card" id="program-8" data-program-category="sunset" data-program-extra hidden>
+        <img src="assets/program-2.jpg" alt="">
+        <div class="body">
+          <div class="eyebrow">선셋 이벤트</div>
+          <h3>선셋 DJ 파티</h3><p>노을과 음악이 함께하는 비치 파티</p>
+          <div class="meta"><span>▣ 8.8 - 8.10</span><span>⌖ 선셋 라운지</span></div>
+        </div>
+      </article>
+      <article class="card program-card" id="program-9" data-program-category="experience" data-program-extra hidden>
+        <img src="assets/program-3.jpg" alt="">
+        <div class="body">
+          <div class="eyebrow">체험 프로그램</div>
+          <h3>모닝 웰니스</h3><p>파도 소리와 함께 여는 건강한 아침</p>
+          <div class="meta"><span>▣ 8.9 - 8.11</span><span>⌖ 요가 존</span></div>
+        </div>
+      </article>
+      <article class="card program-card" id="program-10" data-program-category="experience" data-program-extra hidden>
+        <img src="assets/program-4.jpg" alt="">
+        <div class="body">
+          <div class="eyebrow">체험 프로그램</div>
+          <h3>오션 액티비티</h3><p>바다를 가까이서 만나는 체험 프로그램</p>
+          <div class="meta"><span>▣ 8.7 - 8.13</span><span>⌖ 해양 체험존</span></div>
+        </div>
+      </article>
+      <article class="card program-card" id="program-11" data-program-category="food" data-program-extra hidden>
+        <img src="assets/program-5.jpg" alt="">
+        <div class="body">
+          <div class="eyebrow">푸드 마켓</div>
+          <h3>로컬 푸드 마켓</h3><p>부산의 맛을 한자리에서 만나는 푸드존</p>
+          <div class="meta"><span>▣ 8.7 - 8.13</span><span>⌖ 푸드존</span></div>
+        </div>
+      </article>
+      <article class="card program-card" id="program-12" data-program-category="night" data-program-extra hidden>
+        <img src="assets/program-6.jpg" alt="">
+        <div class="body">
+          <div class="eyebrow">야간 프로그램</div>
+          <h3>피날레 나이트</h3><p>불꽃과 음악으로 완성하는 축제의 마지막 밤</p>
+          <div class="meta"><span>▣ 8.13</span><span>⌖ 메인 해변</span></div>
+        </div>
+      </article>
+    </div>
+    <div class="program-more-wrap" data-program-more-wrap>
+      <button class="btn btn--outline program-more-btn" type="button" data-program-more aria-expanded="false" aria-controls="program-list">프로그램 더보기 <span aria-hidden="true">↓</span></button>
     </div>
   </div>
 </section>
@@ -151,6 +201,6 @@
   </div>
 </footer>
 
-<script src="js/main.js"></script>
+<script src="js/main.js?v=program-list"></script>
 </body>
 </html>

@@ -214,6 +214,22 @@ button{cursor:pointer}
 }
 .category.active{border-color:var(--orange);background:#fff9f4}
 .category i{display:block;font-style:normal;font-size:26px;color:var(--blue);margin-bottom:8px}
+.program-more-wrap{display:flex;justify-content:center;margin-top:36px}
+.program-more-wrap[hidden]{display:none}
+.program-more-btn{gap:10px;min-width:174px;justify-content:center}
+.program-more-btn span{font-size:15px;transition:transform .2s ease}
+.program-more-btn:hover span{transform:translateY(2px)}
+#program-list .program-card{scroll-margin-top:110px}
+#program-list .program-card.is-revealing{animation:programReveal .42s ease both}
+#program-list .program-card.is-hash-target{animation:programTargetHighlight 1.35s ease}
+@keyframes programReveal{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes programTargetHighlight{
+  0%,100%{border-color:var(--border);box-shadow:none}
+  18%,72%{border-color:rgba(255,122,37,.82);box-shadow:0 0 0 4px rgba(255,122,37,.12),0 14px 34px rgba(18,59,114,.12)}
+}
 
 /* Guide */
 .guide-top{display:grid;grid-template-columns:1.3fr .8fr;gap:45px;align-items:center}

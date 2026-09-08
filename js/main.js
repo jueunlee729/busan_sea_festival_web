@@ -113,19 +113,95 @@ document.addEventListener("DOMContentLoaded", () => {
     setActivePage(0);
   }
 
-  // Program category filter
+  // Program list: filters, progressive reveal and hash navigation
   const categoryBtns = document.querySelectorAll("[data-program-filter]");
   const programCards = document.querySelectorAll("[data-program-category]");
-  categoryBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      categoryBtns.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      const filter = btn.dataset.programFilter;
-      programCards.forEach(card => {
-        card.style.display = (filter === "all" || card.dataset.programCategory === filter) ? "" : "none";
+  const extraProgramCards = [...document.querySelectorAll("[data-program-extra]")];
+  const programMoreBtn = document.querySelector("[data-program-more]");
+  const programMoreWrap = document.querySelector("[data-program-more-wrap]");
+  let programExpanded = false;
+  let programHighlightTimer = null;
+
+  if(programCards.length){
+    const setProgramExpanded = (expanded, animate = false) => {
+      programExpanded = expanded;
+      extraProgramCards.forEach((card, index) => {
+        card.hidden = !expanded;
+        card.classList.remove("is-revealing");
+        if(expanded && animate){
+          card.style.animationDelay = `${index * 45}ms`;
+          card.classList.add("is-revealing");
+        }else{
+          card.style.animationDelay = "";
+        }
       });
+      if(programMoreBtn) programMoreBtn.setAttribute("aria-expanded", String(expanded));
+      if(programMoreWrap) programMoreWrap.hidden = expanded;
+    };
+
+    const selectProgramFilter = filter => {
+      categoryBtns.forEach(btn => btn.classList.toggle("active", btn.dataset.programFilter === filter));
+
+      if(filter === "all"){
+        programCards.forEach(card => { card.hidden = card.hasAttribute("data-program-extra"); });
+        programExpanded = false;
+        if(programMoreBtn) programMoreBtn.setAttribute("aria-expanded", "false");
+        if(programMoreWrap) programMoreWrap.hidden = false;
+      }else{
+        programCards.forEach(card => {
+          card.hidden = card.dataset.programCategory !== filter;
+          card.classList.remove("is-revealing");
+          card.style.animationDelay = "";
+        });
+        programExpanded = false;
+        if(programMoreBtn) programMoreBtn.setAttribute("aria-expanded", "false");
+        if(programMoreWrap) programMoreWrap.hidden = true;
+      }
+    };
+
+    const highlightProgramFromHash = () => {
+      const match = window.location.hash.match(/^#program-(\d{1,2})$/);
+      if(!match) return;
+
+      const number = Number(match[1]);
+      if(number < 1 || number > 12) return;
+      const target = document.getElementById(`program-${number}`);
+      if(!target) return;
+
+      programCards.forEach(card => card.classList.remove("is-hash-target"));
+      categoryBtns.forEach(btn => btn.classList.toggle("active", btn.dataset.programFilter === "all"));
+      programCards.forEach(card => { card.hidden = number <= 6 && card.hasAttribute("data-program-extra"); });
+      setProgramExpanded(number > 6);
+
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          target.scrollIntoView({behavior:"smooth", block:"center"});
+          target.classList.remove("is-hash-target");
+          void target.offsetWidth;
+          target.classList.add("is-hash-target");
+          if(programHighlightTimer) window.clearTimeout(programHighlightTimer);
+          programHighlightTimer = window.setTimeout(() => target.classList.remove("is-hash-target"), 1400);
+        });
+      });
+    };
+
+    categoryBtns.forEach(btn => {
+      btn.addEventListener("click", () => selectProgramFilter(btn.dataset.programFilter));
     });
-  });
+
+    if(programMoreBtn){
+      programMoreBtn.addEventListener("click", () => {
+        if(!programExpanded) setProgramExpanded(true, true);
+      });
+    }
+
+    if(window.location.hash) highlightProgramFromHash();
+    window.addEventListener("hashchange", highlightProgramFromHash);
+    window.addEventListener("popstate", () => window.setTimeout(highlightProgramFromHash, 0));
+    window.addEventListener("pageshow", event => {
+      if(event.persisted) highlightProgramFromHash();
+    });
+  }
 
   // News filters / search
   const tabs = document.querySelectorAll("[data-news-filter]");
