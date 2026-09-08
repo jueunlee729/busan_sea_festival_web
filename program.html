@@ -156,13 +156,9 @@
 <section class="section" id="schedule">
   <div class="container">
     <h2 class="section-title">날짜별 일정표</h2>
-    <div class="schedule-row">
-      <div class="schedule-item"><div class="time">11:00</div><h4>개막식</h4><p>개막 퍼포먼스 & 환영 인사</p></div>
-      <div class="schedule-item"><div class="time">13:00</div><h4>해양 체험 클래스</h4><p>카약 & SUP 체험</p></div>
-      <div class="schedule-item"><div class="time">15:00</div><h4>비치 요가</h4><p>바다와 함께하는 힐링 요가</p></div>
-      <div class="schedule-item"><div class="time">17:00</div><h4>선셋 공연</h4><p>감성 라이브 공연</p></div>
-      <div class="schedule-item"><div class="time">19:30</div><h4>라이브 콘서트</h4><p>메인 아티스트 공연</p></div>
-      <div class="schedule-item"><div class="time">21:30</div><h4>불꽃 이벤트</h4><p>해변 불꽃쇼</p></div>
+    <div class="festival-schedule" data-festival-schedule>
+      <div class="festival-schedule__tabs" data-schedule-tabs role="tablist" aria-label="축제 날짜 선택"></div>
+      <div class="festival-schedule__panel" data-schedule-panel role="tabpanel" aria-live="polite"></div>
     </div>
   </div>
 </section>
@@ -201,6 +197,6 @@
   </div>
 </footer>
 
-<script src="js/main.js?v=program-list"></script>
+<script src="js/main.js?v=schedule-data"></script>
 </body>
 </html>
