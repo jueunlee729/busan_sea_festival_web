@@ -494,30 +494,122 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // News filters / search
-  const tabs = document.querySelectorAll("[data-news-filter]");
-  const newsCards = document.querySelectorAll("[data-news-card]");
-  const searchInput = document.querySelector("#newsSearch");
-  let currentFilter = "all";
+  // NEWS page: filter → search → sort → pagination
+  const newsList = document.querySelector("[data-news-list]");
+  if(newsList){
+    const newsTabs = [...document.querySelectorAll("[data-news-filter]")];
+    const newsCards = [...newsList.querySelectorAll("[data-news-card]")];
+    const searchInput = document.querySelector("#newsSearch");
+    const sortRoot = document.querySelector("[data-news-sort]");
+    const sortToggle = sortRoot?.querySelector("[data-news-sort-toggle]");
+    const sortLabel = sortRoot?.querySelector("[data-news-sort-label]");
+    const sortMenu = sortRoot?.querySelector("[data-news-sort-menu]");
+    const sortOptions = [...(sortRoot?.querySelectorAll("[data-news-sort-value]") || [])];
+    const pagination = document.querySelector("[data-news-pagination]");
+    const emptyMessage = document.querySelector("[data-news-empty]");
+    const pageSize = 6;
+    let currentFilter = "all";
+    let currentSort = "latest";
+    let currentPage = 1;
 
-  function applyNewsFilter(){
-    const q = searchInput ? searchInput.value.trim().toLowerCase() : "";
-    newsCards.forEach(card => {
-      const cat = card.dataset.category;
-      const text = card.innerText.toLowerCase();
-      const catOk = currentFilter === "all" || cat === currentFilter;
-      const qOk = !q || text.includes(q);
-      card.style.display = (catOk && qOk) ? "" : "none";
+    const closeSortMenu = () => {
+      if(!sortToggle || !sortMenu) return;
+      sortToggle.setAttribute("aria-expanded", "false");
+      sortMenu.hidden = true;
+    };
+
+    const scrollToNewsList = () => {
+      const headerOffset = window.innerWidth <= 768 ? 82 : 102;
+      const top = newsList.getBoundingClientRect().top + window.scrollY - headerOffset;
+      window.scrollTo({top, behavior:"smooth"});
+    };
+
+    const renderNews = (shouldScroll = false) => {
+      const query = searchInput ? searchInput.value.trim().toLowerCase() : "";
+      const filtered = newsCards
+        .filter(card => {
+          const categoryMatches = currentFilter === "all" || card.dataset.category === currentFilter;
+          const searchMatches = !query || card.textContent.toLowerCase().includes(query);
+          return categoryMatches && searchMatches;
+        })
+        .sort((a, b) => currentSort === "views"
+          ? Number(b.dataset.views) - Number(a.dataset.views)
+          : new Date(b.dataset.date) - new Date(a.dataset.date));
+
+      const totalPages = Math.ceil(filtered.length / pageSize);
+      currentPage = Math.min(Math.max(currentPage, 1), Math.max(totalPages, 1));
+      const pageStart = (currentPage - 1) * pageSize;
+      const visibleCards = new Set(filtered.slice(pageStart, pageStart + pageSize));
+
+      filtered.forEach(card => newsList.appendChild(card));
+      newsCards.forEach(card => { card.hidden = !visibleCards.has(card); });
+      if(emptyMessage) emptyMessage.hidden = filtered.length !== 0;
+
+      if(pagination){
+        pagination.hidden = totalPages <= 1;
+        pagination.innerHTML = totalPages > 1 ? `
+          <button type="button" data-news-page="prev" aria-label="이전 페이지" ${currentPage === 1 ? "disabled" : ""}>‹</button>
+          ${Array.from({length:totalPages}, (_, index) => {
+            const page = index + 1;
+            return `<button type="button" class="${page === currentPage ? "active" : ""}" data-news-page="${page}" aria-label="${page}페이지" aria-current="${page === currentPage ? "page" : "false"}">${page}</button>`;
+          }).join("")}
+          <button type="button" data-news-page="next" aria-label="다음 페이지" ${currentPage === totalPages ? "disabled" : ""}>›</button>` : "";
+      }
+
+      if(shouldScroll) scrollToNewsList();
+    };
+
+    newsTabs.forEach(tab => tab.addEventListener("click", () => {
+      newsTabs.forEach(item => item.classList.remove("active"));
+      tab.classList.add("active");
+      currentFilter = tab.dataset.newsFilter;
+      currentPage = 1;
+      renderNews();
+    }));
+
+    if(searchInput){
+      searchInput.addEventListener("input", () => {
+        currentPage = 1;
+        renderNews();
+      });
+    }
+
+    sortToggle?.addEventListener("click", () => {
+      const willOpen = sortToggle.getAttribute("aria-expanded") !== "true";
+      sortToggle.setAttribute("aria-expanded", String(willOpen));
+      sortMenu.hidden = !willOpen;
+      if(willOpen) sortOptions.find(option => option.dataset.newsSortValue === currentSort)?.focus();
     });
-  }
 
-  tabs.forEach(tab => tab.addEventListener("click", () => {
-    tabs.forEach(t => t.classList.remove("active"));
-    tab.classList.add("active");
-    currentFilter = tab.dataset.newsFilter;
-    applyNewsFilter();
-  }));
-  if(searchInput) searchInput.addEventListener("input", applyNewsFilter);
+    sortOptions.forEach(option => option.addEventListener("click", () => {
+      currentSort = option.dataset.newsSortValue;
+      currentPage = 1;
+      sortLabel.textContent = option.textContent;
+      sortOptions.forEach(item => item.setAttribute("aria-selected", String(item === option)));
+      closeSortMenu();
+      sortToggle.focus();
+      renderNews();
+    }));
+
+    pagination?.addEventListener("click", event => {
+      const button = event.target.closest("[data-news-page]");
+      if(!button || button.disabled) return;
+      const value = button.dataset.newsPage;
+      currentPage = value === "prev" ? currentPage - 1 : value === "next" ? currentPage + 1 : Number(value);
+      renderNews(true);
+    });
+
+    document.addEventListener("click", event => {
+      if(sortRoot && !sortRoot.contains(event.target)) closeSortMenu();
+    });
+    sortRoot?.addEventListener("keydown", event => {
+      if(event.key !== "Escape") return;
+      closeSortMenu();
+      sortToggle.focus();
+    });
+
+    renderNews();
+  }
 
   // Ticket quantity / totals
   const ticketOptions = document.querySelectorAll(".ticket-option");
