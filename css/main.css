@@ -1,25 +1,38 @@
 
 :root{
-  --navy:#123B72;
-  --navy-2:#0D315F;
-  --blue:#2679EE;
+
+  /* 제목, 본문 주요 텍스트 */
+
+  --navy:#1B2B4C;  
+  --navy-2:var(--navy);
+
+  /* 링크, 서브 포인트 */
+
+  --blue:#4A90E2;
   --blue-soft:#EEF6FF;
-  --orange:#FF7A25;
-  --coral:#FF6B6B;
+
+  /* 버튼, 중요 일정, 강조 */ 
+
+  --orange: #FC6B01;
+
+  /* 메인 포인트 */
+
+ --coral: #F45667; 
+  
   --green:#20A86B;
   --purple:#7A5BD2;
+
   --text:#203047;
   --muted:#6D7A8C;
   --border:#E2E8F0;
   --surface:#F8FAFC;
   --white:#fff;
-  --coral: #F45667;      /* 메인 포인트 */
-  --orange: #FC6B01;     /* 버튼, 중요 일정, 강조 */
-  --navy: #1B2B4C;       /* 제목, 본문 주요 텍스트 */
-  --blue: #4A90E2;       /* 링크, 서브 포인트 */
+      
+      
   --max:1200px;
   --radius:18px;
-  --shadow:0 12px 32px rgba(18,59,114,.08);
+  --shadow:0 12px 32px rgba(27,43,76,.08);
+
 }
 
 *{box-sizing:border-box}
