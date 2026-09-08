@@ -23,42 +23,58 @@
 </header>
 
 
-<section class="hero">
-  <div class="container hero-content">
-        <div class="year">2026</div>
-        <h1>BUSAN<br>SEA<br>FESTIVAL</h1>
-        <p>다대포의 노을, 파도와 음악이 만나는 순간</p>
-        <div class="hero-meta">2026. 8.7(금) - 8.13(목)</div>
-        <p>다대포해수욕장 일원</p>
-        <div class="hero-cta"><a class="btn btn--ghost" href="program.html">프로그램 보러가기 →</a></div>
-        </div>
+<section class="news-detail-hero" data-category="festival">
+  <div class="container news-detail-hero__inner">
+    <div class="news-detail-hero__copy">
+      <!-- NEWS DETAIL: 카테고리 -->
+      <span class="news-detail-hero__category">축제소식</span>
+      <!-- NEWS DETAIL: 제목 -->
+      <h1>2026 부산바다축제 공식 캐릭터 '다랑이' 소개</h1>
+      <!-- NEWS DETAIL: 설명 -->
+      <p class="news-detail-hero__summary">바다의 푸른빛에서 태어난 다랑이와 친구들을 만나보세요.</p>
+      <!-- NEWS DETAIL: 날짜 / 조회수 -->
+      <div class="news-detail-hero__meta"><time datetime="2026-08-06">2026.08.06</time><span>조회수 1,707</span></div>
+    </div>
+    <!-- NEWS DETAIL: HERO IMAGE -->
+    <div class="news-detail-hero__visual"><img src="assets/darang-main.jpg" alt="부산바다축제 공식 캐릭터 다랑이"></div>
+  </div>
+  <svg class="news-detail-hero__wave" viewBox="0 0 1440 140" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,62 C240,112 430,18 675,58 C925,98 1160,24 1440,62 L1440,140 L0,140 Z" fill="white"/>
+  </svg>
 </section>
 
-<section class="section">
-  <article class="container article">
-    <h1>2026 부산바다축제 공식 캐릭터 '다랑이' 소개</h1>
-    <div class="article-hero"><img src="assets/darang-main.jpg" alt="다랑이"></div>
-    <p class="caption">공식 캐릭터 '다랑이'</p>
+<section class="section news-detail-body">
+  <!-- NEWS DETAIL: ARTICLE CONTENT -->
+  <article class="container news-detail-article">
+    <div class="news-detail-article__intro">
+      <p>부산바다축제의 즐거움을 함께 전할 공식 캐릭터 다랑이와 친구들을 소개합니다.</p>
+    </div>
 
-    <section class="article-section">
+    <section class="news-detail-article__section">
       <h2>공식 캐릭터 '다랑이' 캐릭터팝업 런칭</h2>
       <p>이제 바다축제의 다랑이를 캐릭터샵에서 만나보실 수 있습니다!</p>
-      <div class="article-gallery">
-        <img src="assets/darang-lineup.jpg" alt="">
-        <img src="assets/darang-lineup.jpg" alt="">
-        <img src="assets/darang-lineup.jpg" alt="">
+      <div class="news-detail-article__gallery">
+        <img src="assets/darang-lineup.jpg" alt="다랑이 캐릭터 라인업 1">
+        <img src="assets/darang-lineup.jpg" alt="다랑이 캐릭터 라인업 2">
+        <img src="assets/darang-lineup.jpg" alt="다랑이 캐릭터 라인업 3">
       </div>
     </section>
 
-    <section class="article-section">
+    <section class="news-detail-article__section">
       <img src="assets/darang-group.jpg" alt="다랑이 AI 예시 캐릭터 이미지">
-      <p class="caption">- 바다축제 AI 예시 캐릭터 이미지 -</p>
+      <p class="news-detail-article__caption">바다축제 AI 예시 캐릭터 이미지</p>
     </section>
 
-    <section class="article-section">
+    <section class="news-detail-article__section">
       <img src="assets/darang-popup.jpg" alt="다랑이 팝업 이미지">
-      <p class="caption">- 바다축제 캐릭터샵 AI 예시 팝업 이미지 -</p>
+      <p class="news-detail-article__caption">바다축제 캐릭터샵 AI 예시 팝업 이미지</p>
     </section>
+
+    <nav class="news-detail-nav" aria-label="뉴스 상세 이동">
+      <span class="news-detail-nav__side is-disabled" aria-disabled="true">← 이전글</span>
+      <a class="news-detail-nav__list" href="news.html">목록으로</a>
+      <span class="news-detail-nav__side is-disabled" aria-disabled="true">다음글 →</span>
+    </nav>
   </article>
 </section>
 
