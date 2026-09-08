@@ -51,10 +51,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     viewport.addEventListener("pointerdown", event => {
       if(event.pointerType === "mouse" && event.button !== 0) return;
+
+
+      // 링크를 클릭했을 때는 슬라이더가 포인터를 가로채지 않음
+      if(event.target.closest("a")) return;
+
       pointerId = event.pointerId;
       startX = event.clientX;
       startScrollLeft = viewport.scrollLeft;
       didDrag = false;
+
       viewport.setPointerCapture(pointerId);
       viewport.classList.add("is-dragging");
     });
