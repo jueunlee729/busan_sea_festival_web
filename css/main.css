@@ -224,6 +224,8 @@ button{cursor:pointer}
 .program-slider__viewport::-webkit-scrollbar{display:none}
 .program-slider__viewport.is-dragging{cursor:grabbing;scroll-behavior:auto;user-select:none}
 .program-slide{flex:0 0 100%;min-width:0;scroll-snap-align:start;scroll-snap-stop:always}
+.program-slide--cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.program-slide--cards .program-card img{height:220px}
 .program-slide img,.program-slide a{-webkit-user-drag:none;user-select:none}
 .program-slider__dots{display:flex;justify-content:center;align-items:center;gap:9px;margin-top:26px}
 .program-slider__dot{
@@ -270,7 +272,7 @@ button{cursor:pointer}
 .leaflet-grid img{border-radius:10px}
 
 /* Program */
-.category-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:18px}
+.category-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
 .category{
   border:1px solid var(--border);border-radius:12px;padding:24px 12px;text-align:center;
   background:#fff;font-size:13px;font-weight:800;color:var(--navy)
@@ -529,6 +531,7 @@ button{cursor:pointer}
   .news-card{grid-template-columns:280px 1fr 60px}
   .summary-panel{position:static}
   .footer-grid{grid-template-columns:repeat(3,1fr)}
+  .program-slide--cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
   .news-detail-hero__inner{grid-template-columns:minmax(0,48fr) minmax(0,52fr);gap:34px}
   .news-detail-hero h1{font-size:40px}
   .news-detail-hero__visual{height:390px}
@@ -589,7 +592,7 @@ button{cursor:pointer}
   .video-card--main,.video-card--sub{grid-column:auto;aspect-ratio:16/10}
   .video-card--main .play{width:56px;height:56px;font-size:18px}
   .program-card img{height:190px}
-  .program-slide.grid-6{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .program-slide--cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
   .program-slide .program-card img{height:clamp(110px,34vw,155px)}
   .program-slide .program-card .body{padding:14px 12px}
   .program-slide .program-card h3{font-size:15px}

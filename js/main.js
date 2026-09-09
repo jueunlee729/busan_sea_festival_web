@@ -455,7 +455,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if(!match) return;
 
       const number = Number(match[1]);
-      if(number < 1 || number > 12) return;
+      if(number < 1 || number > 9) return;
       const target = document.getElementById(`program-${number}`);
       if(!target) return;
 
