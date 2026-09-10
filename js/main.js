@@ -639,6 +639,52 @@ document.addEventListener("DOMContentLoaded", () => {
     if(event.key === "Escape" && guideMapModal && !guideMapModal.hidden) closeGuideMap();
   });
 
+  // Guide traffic notice popup
+  // 개발 중 팝업을 다시 보려면 콘솔에서 실행: localStorage.removeItem("busanSeaFestivalGuideNoticeHidden");
+  const guideNoticePopup = document.querySelector("[data-guide-notice-popup]");
+  const guideNoticeCloseButtons = document.querySelectorAll("[data-guide-notice-close]");
+  const guideNoticeHide = document.querySelector("[data-guide-notice-hide]");
+  const guideNoticeStorageKey = "busanSeaFestivalGuideNoticeHidden";
+  let guideNoticeReturnFocus = null;
+
+  const closeGuideNotice = () => {
+    if(!guideNoticePopup || guideNoticePopup.hidden) return;
+    if(guideNoticeHide?.checked){
+      try{
+        localStorage.setItem(guideNoticeStorageKey, "true");
+      }catch(error){
+        console.warn("교통통제 안내 팝업 설정을 저장하지 못했습니다.", error);
+      }
+    }
+    guideNoticePopup.hidden = true;
+    document.body.classList.remove("guide-notice-popup-open");
+    guideNoticeReturnFocus?.focus();
+  };
+
+  if(guideNoticePopup){
+    let guideNoticeIsHidden = false;
+    try{
+      guideNoticeIsHidden = localStorage.getItem(guideNoticeStorageKey) === "true";
+    }catch(error){
+      console.warn("교통통제 안내 팝업 설정을 확인하지 못했습니다.", error);
+    }
+
+    if(!guideNoticeIsHidden){
+      guideNoticeReturnFocus = document.activeElement;
+      guideNoticePopup.hidden = false;
+      document.body.classList.add("guide-notice-popup-open");
+      guideNoticeCloseButtons[0]?.focus();
+    }
+  }
+
+  guideNoticeCloseButtons.forEach(button => button.addEventListener("click", closeGuideNotice));
+  guideNoticePopup?.addEventListener("click", event => {
+    if(event.target === guideNoticePopup) closeGuideNotice();
+  });
+  document.addEventListener("keydown", event => {
+    if(event.key === "Escape" && guideNoticePopup && !guideNoticePopup.hidden) closeGuideNotice();
+  });
+
   // Ticket quantity / totals
   const ticketOptions = document.querySelectorAll(".ticket-option");
   const totalEl = document.querySelector("[data-ticket-total]");
