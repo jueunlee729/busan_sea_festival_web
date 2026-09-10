@@ -150,6 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     viewport.addEventListener("pointerdown", event => {
       if(event.pointerType === "mouse" && event.button !== 0) return;
+      if(event.target.closest("a")) return;
       pointerId = event.pointerId;
       startX = event.clientX;
       startScrollLeft = viewport.scrollLeft;
