@@ -391,8 +391,8 @@ button{cursor:pointer}
 .guide-map-modal__close{position:absolute;top:10px;right:10px;z-index:1;display:grid;width:42px;height:42px;place-items:center;border:0;border-radius:50%;background:rgba(27,43,76,.9);color:#fff;font-size:28px;line-height:1;box-shadow:0 6px 18px rgba(0,0,0,.2)}
 body.guide-map-modal-open{overflow:hidden}
 .guide-transport__intro{margin:12px 0 0;color:var(--muted);font-size:15px}
-.guide-transport__visual{margin-top:30px;padding:10px;overflow:hidden;border:1px solid var(--border);border-radius:20px;background:var(--blue-soft);box-shadow:0 12px 30px rgba(27,43,76,.08)}
-.guide-transport__visual img{display:block;width:100%;height:min(70vh,720px);border-radius:13px;object-fit:contain}
+.guide-transport__map{height:460px;margin-top:30px;overflow:hidden;border:1px solid var(--border);border-radius:20px;background:var(--blue-soft);box-shadow:0 12px 30px rgba(27,43,76,.08)}
+.guide-transport__map iframe{display:block;width:100%;height:100%;border:0}
 .guide-transport__cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:20px}
 .guide-transport-card{--transport-accent:var(--blue);padding:20px 18px;border:1px solid var(--border);border-radius:16px;background:#fff}
 .guide-transport-card:nth-child(2){--transport-accent:var(--orange)}
@@ -597,6 +597,7 @@ body.guide-map-modal-open{overflow:hidden}
   .news-detail-article__gallery{grid-template-columns:1fr}
   .news-detail-article__intro{margin-bottom:60px}
   .news-detail-article__section{margin-bottom:68px}
+  .guide-transport__map{height:380px}
   .ticket-option{grid-template-columns:38px 50px 1fr}
   .ticket-price,.qty{grid-column:3}
   .steps{grid-template-columns:repeat(2,1fr);gap:18px}
@@ -638,8 +639,7 @@ body.guide-map-modal-open{overflow:hidden}
   .guide-map-modal__dialog{max-width:calc(100vw - 24px);max-height:calc(100vh - 24px)}
   .guide-map-modal__dialog img{max-height:calc(100vh - 24px)}
   .guide-map-modal__close{top:8px;right:8px;width:38px;height:38px;font-size:25px}
-  .guide-transport__visual{margin-top:24px;padding:6px;border-radius:18px}
-  .guide-transport__visual img{height:auto;border-radius:12px}
+  .guide-transport__map{height:320px;margin-top:24px;border-radius:18px}
   .guide-transport__cards{grid-template-columns:1fr;gap:10px;margin-top:14px}
   .guide-transport-card{padding:17px 15px}
   .guide-transport-card__icon{margin-bottom:13px}
