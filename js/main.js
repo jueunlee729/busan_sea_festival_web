@@ -729,3 +729,102 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   if(ticketOptions.length) updateTicketTotal();
 });
+
+// GUIDE information card news: independent of the HOME sliders.
+document.addEventListener("DOMContentLoaded", () => {
+  const guideInfoSlider = document.querySelector(".guide-info-slider");
+  if(!guideInfoSlider) return;
+  const guideInfoViewport = guideInfoSlider.querySelector(".guide-info-slider__viewport");
+  const guideInfoTrack = guideInfoSlider.querySelector(".guide-info-slider__track");
+  const guideInfoSlides = [...guideInfoTrack.children];
+  const guideInfoPrev = guideInfoSlider.querySelector(".guide-info-slider__prev");
+  const guideInfoNext = guideInfoSlider.querySelector(".guide-info-slider__next");
+  const guideInfoDots = guideInfoSlider.querySelector(".guide-info-slider__dots");
+  let guideInfoIndex = 0;
+  let guideInfoMaxIndex = 0;
+  let guideInfoStep = 0;
+  let guideInfoPointer = null;
+  let guideInfoStartX = 0;
+  let guideInfoStartY = 0;
+  let guideInfoDistance = 0;
+  let guideInfoAxis = null;
+
+  const guideInfoGoTo = index => {
+    guideInfoIndex = Math.max(0, Math.min(guideInfoMaxIndex, index));
+    guideInfoTrack.style.transform = `translateX(${-guideInfoIndex * guideInfoStep}px)`;
+    guideInfoPrev.disabled = guideInfoIndex === 0;
+    guideInfoNext.disabled = guideInfoIndex === guideInfoMaxIndex;
+    [...guideInfoDots.children].forEach((dot, position) => {
+      dot.classList.toggle("is-active", position === guideInfoIndex);
+      dot.setAttribute("aria-current", String(position === guideInfoIndex));
+    });
+  };
+  const guideInfoEndDrag = (cancelled = false) => {
+    const nextIndex = !cancelled && guideInfoAxis === "x" && Math.abs(guideInfoDistance) > 45
+      ? guideInfoIndex + (guideInfoDistance < 0 ? 1 : -1) : guideInfoIndex;
+    const pointer = guideInfoPointer;
+    guideInfoPointer = null;
+    if(pointer !== null && guideInfoViewport.hasPointerCapture(pointer)) guideInfoViewport.releasePointerCapture(pointer);
+    guideInfoViewport.classList.remove("is-dragging");
+    guideInfoGoTo(nextIndex);
+  };
+  const guideInfoResize = () => {
+    if(guideInfoPointer !== null) guideInfoEndDrag(true);
+    const guideInfoVisible = Number(getComputedStyle(guideInfoSlider).getPropertyValue("--guide-info-visible"));
+    guideInfoMaxIndex = Math.max(0, guideInfoSlides.length - guideInfoVisible);
+    guideInfoStep = guideInfoSlides[0].getBoundingClientRect().width + parseFloat(getComputedStyle(guideInfoTrack).gap);
+    if(guideInfoDots.children.length !== guideInfoMaxIndex + 1){
+      guideInfoDots.replaceChildren();
+      for(let position = 0; position <= guideInfoMaxIndex; position++){
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "guide-info-slider__dot";
+        dot.setAttribute("aria-label", `안내 ${position + 1}번부터 보기`);
+        dot.addEventListener("click", () => guideInfoGoTo(position));
+        guideInfoDots.append(dot);
+      }
+    }
+    guideInfoGoTo(guideInfoIndex);
+  };
+  guideInfoPrev.addEventListener("click", () => guideInfoGoTo(guideInfoIndex - 1));
+  guideInfoNext.addEventListener("click", () => guideInfoGoTo(guideInfoIndex + 1));
+  guideInfoViewport.addEventListener("pointerdown", event => {
+    if(guideInfoPointer !== null || !event.isPrimary || (event.pointerType === "mouse" && event.button !== 0)) return;
+    guideInfoPointer = event.pointerId;
+    guideInfoStartX = event.clientX;
+    guideInfoStartY = event.clientY;
+    guideInfoDistance = 0;
+    guideInfoAxis = null;
+    guideInfoViewport.setPointerCapture(guideInfoPointer);
+  });
+  guideInfoViewport.addEventListener("pointermove", event => {
+    if(event.pointerId !== guideInfoPointer) return;
+    const dx = event.clientX - guideInfoStartX;
+    const dy = event.clientY - guideInfoStartY;
+    if(!guideInfoAxis){
+      if(Math.max(Math.abs(dx), Math.abs(dy)) < 10) return;
+      if(Math.abs(dy) >= Math.abs(dx)){
+        guideInfoEndDrag(true);
+        return;
+      }
+      if(Math.abs(dx) < Math.abs(dy) * 1.3) return;
+      guideInfoAxis = "x";
+      guideInfoViewport.classList.add("is-dragging");
+    }
+    guideInfoDistance = dx;
+    event.preventDefault();
+    const offset = Math.max(-guideInfoMaxIndex * guideInfoStep, Math.min(0, -guideInfoIndex * guideInfoStep + dx));
+    guideInfoTrack.style.transform = `translateX(${offset}px)`;
+  });
+  guideInfoViewport.addEventListener("pointerup", event => {
+    if(event.pointerId === guideInfoPointer) guideInfoEndDrag();
+  });
+  guideInfoViewport.addEventListener("pointercancel", event => {
+    if(event.pointerId === guideInfoPointer) guideInfoEndDrag(true);
+  });
+  guideInfoViewport.addEventListener("lostpointercapture", event => {
+    if(event.pointerId === guideInfoPointer) guideInfoEndDrag(true);
+  });
+  window.addEventListener("resize", guideInfoResize);
+  guideInfoResize();
+});

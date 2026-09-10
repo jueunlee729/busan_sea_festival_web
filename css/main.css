@@ -1141,3 +1141,32 @@ body.guide-notice-popup-open{overflow:hidden}
   .festival-timeline__time{text-align:left;color:var(--orange)}
   .festival-timeline__content{padding-left:0}
 }
+
+/* GUIDE information card news */
+.guide-info__intro{margin:12px 0 28px;color:var(--muted)}
+.guide-info-slider{--guide-info-visible:3;min-width:0}
+.guide-info-slider__viewport{overflow:hidden;touch-action:pan-y pinch-zoom;cursor:grab}
+.guide-info-slider__track{display:flex;gap:20px;align-items:flex-start;transition:transform .35s ease;user-select:none}
+.guide-info-slide{flex:0 0 calc((100% - 40px)/3);min-width:0;background:#fff;border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:0 2px 8px rgba(27,43,76,.04)}
+.guide-info-slide img{display:block;width:100%;height:auto;object-fit:contain}
+.guide-info-slider__viewport.is-dragging{cursor:grabbing}
+.guide-info-slider__viewport.is-dragging .guide-info-slider__track{transition:none}
+.guide-info-slider__controls{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:24px}
+.guide-info-slider__prev,.guide-info-slider__next{display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;padding:0;border:1px solid var(--border);border-radius:50%;background:#fff;color:var(--navy);font-size:22px;cursor:pointer}
+.guide-info-slider__prev:disabled,.guide-info-slider__next:disabled{opacity:.35;cursor:default}
+.guide-info-slider__dots{display:flex;justify-content:center;flex-wrap:wrap;gap:0;min-width:0}
+.guide-info-slider__dot{display:grid;place-items:center;width:24px;height:32px;padding:0;border:0;background:transparent;cursor:pointer}
+.guide-info-slider__dot::before{content:"";width:8px;height:8px;border-radius:50%;background:#E2E8F0;transition:background .2s ease}
+.guide-info-slider__dot.is-active::before{background:#F45667}
+.guide-info-slider__controls button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+@media (max-width:1024px){
+  .guide-info-slider{--guide-info-visible:2}
+  .guide-info-slide{flex-basis:calc((100% - 20px)/2)}
+}
+@media (max-width:768px){
+  .guide-info-slider{--guide-info-visible:1}
+  .guide-info-slide{flex-basis:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  .guide-info-slider__track{transition:none}
+}
