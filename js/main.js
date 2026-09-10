@@ -612,6 +612,33 @@ document.addEventListener("DOMContentLoaded", () => {
     renderNews();
   }
 
+  // Guide venue map modal
+  const guideMapModal = document.querySelector("[data-guide-map-modal]");
+  const guideMapOpen = document.querySelector("[data-guide-map-open]");
+  const guideMapClose = document.querySelector("[data-guide-map-close]");
+  let guideMapReturnFocus = null;
+
+  const closeGuideMap = () => {
+    if(!guideMapModal || guideMapModal.hidden) return;
+    guideMapModal.hidden = true;
+    document.body.classList.remove("guide-map-modal-open");
+    guideMapReturnFocus?.focus();
+  };
+
+  guideMapOpen?.addEventListener("click", () => {
+    guideMapReturnFocus = document.activeElement;
+    guideMapModal.hidden = false;
+    document.body.classList.add("guide-map-modal-open");
+    guideMapClose?.focus();
+  });
+  guideMapClose?.addEventListener("click", closeGuideMap);
+  guideMapModal?.addEventListener("click", event => {
+    if(event.target === guideMapModal) closeGuideMap();
+  });
+  document.addEventListener("keydown", event => {
+    if(event.key === "Escape" && guideMapModal && !guideMapModal.hidden) closeGuideMap();
+  });
+
   // Ticket quantity / totals
   const ticketOptions = document.querySelectorAll(".ticket-option");
   const totalEl = document.querySelector("[data-ticket-total]");

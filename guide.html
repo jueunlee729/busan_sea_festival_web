@@ -34,20 +34,30 @@
 </section>
 
 <section class="section">
-  <div class="container">
+  <div class="container guide-venue">
     <h2 class="section-title">행사장 안내</h2>
-    <div class="guide-top">
-      <div class="guide-map"><img src="assets/guide-map.jpg" alt="행사장 지도"></div>
-      <div class="guide-info">
-        <div class="guide-info-item"><div class="icon">⌖</div><div><h4>행사 장소</h4><p>다대포해수욕장 일원</p></div></div>
-        <div class="guide-info-item"><div class="icon">⌖</div><div><h4>주소</h4><p>부산광역시 사하구 다대동 482-1</p></div></div>
-        <div class="guide-info-item"><div class="icon">◷</div><div><h4>운영 시간</h4><p>2026.8.7 - 8.13 / 10:00 - 22:00</p></div></div>
-        <div class="guide-info-item"><div class="icon">☎</div><div><h4>문의</h4><p>051-731-5000</p></div></div>
-        <a class="btn btn--primary" href="#">행사장 안내도 보기 →</a>
-      </div>
+    <p class="guide-venue__intro">축제의 주요 공간을 한눈에 확인하세요.</p>
+    <div class="guide-venue-map">
+      <img src="assets/guide-map.jpg" alt="부산바다축제 공식 행사장 지도">
+    </div>
+    <div class="guide-venue-info">
+      <article class="guide-venue-card"><span class="guide-venue-card__icon" aria-hidden="true">⌖</span><div><h3>행사 장소</h3><p>다대포해수욕장 일원</p></div></article>
+      <article class="guide-venue-card"><span class="guide-venue-card__icon" aria-hidden="true">⌖</span><div><h3>주소</h3><p>부산광역시 사하구 다대동 482-1</p></div></article>
+      <article class="guide-venue-card"><span class="guide-venue-card__icon" aria-hidden="true">◷</span><div><h3>운영 시간</h3><p>2026.8.7 - 8.13 / 10:00 - 22:00</p></div></article>
+      <article class="guide-venue-card"><span class="guide-venue-card__icon" aria-hidden="true">☎</span><div><h3>문의</h3><p>051-731-5000</p></div></article>
+    </div>
+    <div class="guide-venue__actions">
+      <button class="btn btn--primary" type="button" data-guide-map-open>지도 크게 보기 ↗</button>
     </div>
   </div>
 </section>
+
+<div class="guide-map-modal" data-guide-map-modal role="dialog" aria-modal="true" aria-label="공식 행사장 지도 크게 보기" hidden>
+  <div class="guide-map-modal__dialog">
+    <button class="guide-map-modal__close" type="button" data-guide-map-close aria-label="지도 확대창 닫기">×</button>
+    <img src="assets/guide-map.jpg" alt="부산바다축제 공식 행사장 지도 확대 이미지">
+  </div>
+</div>
 
 <section class="section" id="transport">
   <div class="container notice-columns">
