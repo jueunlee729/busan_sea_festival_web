@@ -508,6 +508,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const sortOptions = [...(sortRoot?.querySelectorAll("[data-news-sort-value]") || [])];
     const pagination = document.querySelector("[data-news-pagination]");
     const emptyMessage = document.querySelector("[data-news-empty]");
+    const resultStatus = document.querySelector("[data-news-result-status]");
     const pageSize = 6;
     let currentFilter = "all";
     let currentSort = "latest";
@@ -545,6 +546,9 @@ document.addEventListener("DOMContentLoaded", () => {
       filtered.forEach(card => newsList.appendChild(card));
       newsCards.forEach(card => { card.hidden = !visibleCards.has(card); });
       if(emptyMessage) emptyMessage.hidden = filtered.length !== 0;
+      if(resultStatus) resultStatus.textContent = filtered.length
+        ? `총 ${filtered.length}건, ${totalPages}페이지 중 ${currentPage}페이지`
+        : "검색 결과가 없습니다.";
 
       if(pagination){
         pagination.hidden = totalPages <= 1;
