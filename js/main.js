@@ -694,6 +694,53 @@ document.addEventListener("DOMContentLoaded", () => {
   const totalEl = document.querySelector("[data-ticket-total]");
   const summaryName = document.querySelector("[data-summary-name]");
   const summaryQty = document.querySelector("[data-summary-qty]");
+  const ticketStepPanels = document.querySelectorAll("[data-ticket-step]");
+  const ticketStepIndicators = document.querySelectorAll("[data-ticket-step-indicator]");
+  const ticketStepActions = document.querySelectorAll("[data-ticket-step-actions]");
+  const ticketSelectionError = document.querySelector("[data-ticket-selection-error]");
+  const ticketBookerForm = document.querySelector("[data-ticket-booker-form]");
+
+  const getTicketQuantity = () => [...ticketOptions].reduce((sum, opt) =>
+    sum + Number(opt.querySelector("[data-qty]").textContent || 0), 0);
+
+  function setTicketStep(step){
+    if(step !== 1 && step !== 2) return;
+    ticketStepPanels.forEach(panel => {
+      const active = Number(panel.dataset.ticketStep) === step;
+      panel.hidden = !active;
+      panel.classList.toggle("active", active);
+    });
+    ticketStepIndicators.forEach(indicator => {
+      const active = Number(indicator.dataset.ticketStepIndicator) === step;
+      indicator.classList.toggle("active", active);
+      if(active) indicator.setAttribute("aria-current", "step");
+      else indicator.removeAttribute("aria-current");
+    });
+    ticketStepActions.forEach(actions => {
+      actions.hidden = Number(actions.dataset.ticketStepActions) !== step;
+    });
+    document.querySelector(`[data-ticket-step="${step}"] [data-ticket-step-title]`)?.focus();
+  }
+
+  document.querySelectorAll("[data-ticket-next]").forEach(button => {
+    button.addEventListener("click", () => {
+      if(getTicketQuantity() === 0){
+        if(ticketSelectionError){
+          ticketSelectionError.hidden = false;
+          ticketSelectionError.textContent = "티켓을 1매 이상 선택해주세요.";
+        }
+        return;
+      }
+      setTicketStep(Number(button.dataset.ticketNext));
+    });
+  });
+  document.querySelectorAll("[data-ticket-prev]").forEach(button => {
+    button.addEventListener("click", () => setTicketStep(Number(button.dataset.ticketPrev)));
+  });
+  ticketBookerForm?.addEventListener("submit", event => {
+    event.preventDefault();
+    // STEP 03 payment flow will be connected in the next task.
+  });
 
   function updateTicketTotal(){
     let total = 0;
@@ -713,8 +760,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if(totalEl) totalEl.textContent = total.toLocaleString("ko-KR") + "원";
     if(summaryName && firstSelected) summaryName.textContent = firstSelected.dataset.name;
     if(summaryQty){
-      const qtyAll = [...ticketOptions].reduce((s,opt)=>s+Number(opt.querySelector("[data-qty]").textContent||0),0);
+      const qtyAll = getTicketQuantity();
       summaryQty.textContent = qtyAll + "매";
+    }
+    if(ticketSelectionError && getTicketQuantity() > 0){
+      ticketSelectionError.hidden = true;
+      ticketSelectionError.textContent = "";
     }
   }
 

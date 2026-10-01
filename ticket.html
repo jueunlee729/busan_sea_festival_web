@@ -53,12 +53,13 @@
     <div class="ticket-layout">
       <div class="ticket-panel">
         <div class="steps">
-          <div class="step active"><span>01</span>티켓 선택</div>
-          <div class="step"><span>02</span>예매자 정보</div>
+          <div class="step active" data-ticket-step-indicator="1" aria-current="step"><span>01</span>티켓 선택</div>
+          <div class="step" data-ticket-step-indicator="2"><span>02</span>예매자 정보</div>
           <div class="step"><span>03</span>결제하기</div>
           <div class="step"><span>04</span>예매 완료</div>
         </div>
-        <h3 style="color:var(--navy)">티켓 종류 선택</h3>
+        <div class="ticket-step-panel active" data-ticket-step="1">
+        <h3 style="color:var(--navy)" tabindex="-1" data-ticket-step-title>티켓 종류 선택</h3>
         <div class="ticket-options">
           <div class="ticket-option selected" data-price="15000" data-name="1일권 (DAY PASS)">
             <button type="button" class="ticket-radio" aria-pressed="true" aria-label="1일권 선택">✓</button><div class="ticket-badge"></div>
@@ -82,6 +83,33 @@
           </div>
         </div>
         <div class="ticket-note">ⓘ 모든 티켓은 QR코드로 발급되며 모바일 티켓으로 입장 가능합니다. 자세한 이용 안내는 가이드 메뉴를 참고해주세요.</div>
+        </div>
+        <div class="ticket-step-panel" data-ticket-step="2" hidden>
+          <h3 class="ticket-form-title" tabindex="-1" data-ticket-step-title>예매자 정보</h3>
+          <p class="muted">티켓 발급을 위해 예매자 정보를 입력해주세요.</p>
+          <form class="ticket-booker-form" data-ticket-booker-form>
+            <div class="ticket-form-field">
+              <label for="ticket-name">이름 *</label>
+              <input id="ticket-name" name="name" type="text" autocomplete="name" placeholder="홍길동" required>
+            </div>
+            <div class="ticket-form-field">
+              <label for="ticket-phone">연락처 *</label>
+              <input id="ticket-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" required>
+            </div>
+            <div class="ticket-form-field">
+              <label for="ticket-email">이메일 *</label>
+              <input id="ticket-email" name="email" type="email" autocomplete="email" placeholder="example@email.com" required>
+            </div>
+            <label class="ticket-form-consent" for="ticket-consent">
+              <input id="ticket-consent" name="consent" type="checkbox" required>
+              <span>개인정보 수집 및 이용에 동의합니다. (필수) *</span>
+            </label>
+            <div class="ticket-form-actions">
+              <button type="button" class="btn btn--outline" data-ticket-prev="1">‹ 이전 단계</button>
+              <button type="submit" class="btn btn--orange">다음 단계 ›</button>
+            </div>
+          </form>
+        </div>
       </div>
 
       <aside class="summary-panel">
@@ -91,7 +119,10 @@
           <p><b data-summary-name>1일권 (DAY PASS)</b><br><span class="muted">선택 수량 <span data-summary-qty>1매</span></span></p>
           <div class="total"><span>총 결제 금액</span><strong data-ticket-total>15,000원</strong></div>
         </div>
-        <button class="btn btn--orange" style="width:100%">다음 단계 ›</button>
+        <div data-ticket-step-actions="1">
+          <button type="button" class="btn btn--orange" style="width:100%" data-ticket-next="2" aria-describedby="ticket-selection-error">다음 단계 ›</button>
+          <p id="ticket-selection-error" class="ticket-selection-error" data-ticket-selection-error role="alert" hidden></p>
+        </div>
         <div class="payment-box"><b>결제 가능 수단</b><div class="payment-icons"><span>▣<br>신용카드</span><span>pay<br>카카오페이</span><span>N<br>네이버페이</span><span>⌂<br>계좌이체</span></div></div>
       </aside>
     </div>
