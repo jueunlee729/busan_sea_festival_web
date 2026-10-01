@@ -787,7 +787,7 @@ body.guide-notice-popup-open{overflow:hidden}
       rgba(255,244,231,.24) 43%,
       rgba(255,255,255,0) 62%
     ),
-    url("../assets/hero-sunset.jpg") center 48% / cover no-repeat;
+    url("../assets/메인\ 페이지/메인 이미지.png") center 48% / cover no-repeat;
 }
 .home-hero::before{
   content:"";
