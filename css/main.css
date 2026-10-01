@@ -134,7 +134,7 @@ button{cursor:pointer}
   min-height:520px;position:relative;display:flex;align-items:center;
   background:
     linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,.02)),
-    url("../assets/hero-sunset.jpg") center/cover no-repeat;
+    url("../프로그램/프로그램 헤더.png") center/cover no-repeat;
   overflow:hidden
 }
 .hero::before{
