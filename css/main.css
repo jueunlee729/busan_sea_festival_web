@@ -529,7 +529,7 @@ body.guide-notice-popup-open{overflow:hidden}
   border:1px solid var(--border);border-radius:12px;padding:16px
 }
 .ticket-option.selected{border-color:var(--blue)}
-.ticket-radio{width:24px;height:24px;border-radius:50%;border:1px solid var(--border);display:grid;place-items:center}
+.ticket-radio{width:24px;height:24px;border-radius:50%;border:1px solid var(--border);display:grid;place-items:center;padding:0;font:inherit;color:inherit;background:transparent;appearance:none;cursor:pointer}
 .ticket-option.selected .ticket-radio{background:var(--blue);color:#fff}
 .ticket-badge{width:56px;height:56px;border-radius:50%;background:#ee718c}
 .ticket-option h4{margin:0;color:var(--navy)}

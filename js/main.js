@@ -705,7 +705,10 @@ document.addEventListener("DOMContentLoaded", () => {
       total += qty * price;
       opt.classList.toggle("selected", qty > 0);
       const radio = opt.querySelector(".ticket-radio");
-      if(radio) radio.textContent = qty > 0 ? "✓" : "";
+      if(radio){
+        radio.textContent = qty > 0 ? "✓" : "";
+        radio.setAttribute("aria-pressed", String(qty > 0));
+      }
     });
     if(totalEl) totalEl.textContent = total.toLocaleString("ko-KR") + "원";
     if(summaryName && firstSelected) summaryName.textContent = firstSelected.dataset.name;
@@ -714,6 +717,15 @@ document.addEventListener("DOMContentLoaded", () => {
       summaryQty.textContent = qtyAll + "매";
     }
   }
+
+  ticketOptions.forEach(opt => {
+    const radio = opt.querySelector(".ticket-radio");
+    radio?.addEventListener("click", () => {
+      const el = opt.querySelector("[data-qty]");
+      el.textContent = Number(el.textContent) > 0 ? 0 : 1;
+      updateTicketTotal();
+    });
+  });
 
   document.querySelectorAll("[data-qty-minus]").forEach(btn => {
     btn.addEventListener("click", () => {
