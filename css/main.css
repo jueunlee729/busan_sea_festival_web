@@ -549,8 +549,25 @@ body.guide-notice-popup-open{overflow:hidden}
 .ticket-payment-card small{display:block;margin-top:4px;color:var(--muted)}
 .ticket-payment-card:has(input:checked){border-color:var(--blue);background:var(--blue-soft)}
 .ticket-payment-actions{margin-top:28px}
+.ticket-completion-heading{text-align:center}
+.ticket-completion-icon{display:grid;place-items:center;width:72px;height:72px;margin:0 auto 20px;border-radius:50%;background:var(--blue);color:#fff;font-size:38px}
+.ticket-booking-number{margin:24px 0;padding:18px;border:1px solid var(--border);border-radius:12px;color:var(--navy);background:var(--blue-soft)}
+.ticket-booking-number strong{display:block;margin-top:6px;font-size:22px;overflow-wrap:anywhere}
+.ticket-completion-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+.ticket-mobile-pass{text-align:center;color:var(--navy);padding:20px 0}
+.ticket-mobile-pass p{font-size:12px}
+.ticket-demo-qr{position:relative;width:148px;height:148px;margin:0 auto 16px;border:10px solid #fff;background:repeating-conic-gradient(var(--navy) 0% 25%,#fff 0% 50%) 0 0/18px 14px;box-shadow:0 0 0 1px var(--border)}
+.ticket-demo-qr-finder{position:absolute;width:42px;height:42px;border:7px solid var(--navy);background:#fff;box-shadow:0 0 0 4px #fff}
+.ticket-demo-qr-finder::after{content:"";position:absolute;inset:7px;background:var(--navy)}
+.ticket-demo-qr-finder:nth-child(1){top:0;left:0}
+.ticket-demo-qr-finder:nth-child(2){top:0;right:0}
+.ticket-demo-qr-finder:nth-child(3){bottom:0;left:0}
+.ticket-completion-summary{margin:0;min-width:0}
+.ticket-completion-demo{text-align:center;font-size:12px;margin-top:24px}
+.ticket-completion-home{display:flex;width:100%;margin-top:20px}
 @media(max-width:480px){
   .ticket-payment-grid,.ticket-payment-actions{grid-template-columns:1fr}
+  .ticket-completion-grid{grid-template-columns:1fr}
 }
 .ticket-option{
   display:grid;grid-template-columns:44px 56px 1fr 110px 98px;align-items:center;gap:16px;

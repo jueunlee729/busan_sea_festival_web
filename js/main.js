@@ -701,12 +701,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const ticketBookerForm = document.querySelector("[data-ticket-booker-form]");
   const ticketPaymentForm = document.querySelector("[data-ticket-payment-form]");
   const ticketPaymentError = document.querySelector("[data-ticket-payment-error]");
+  let bookingNumber = "";
+  const paymentMethodLabels = {
+    card: "신용 / 체크카드",
+    kakao: "카카오페이",
+    naver: "네이버페이",
+    transfer: "계좌이체"
+  };
 
   const getTicketQuantity = () => [...ticketOptions].reduce((sum, opt) =>
     sum + Number(opt.querySelector("[data-qty]").textContent || 0), 0);
 
   function setTicketStep(step){
-    if(step !== 1 && step !== 2 && step !== 3) return;
+    if(step !== 1 && step !== 2 && step !== 3 && step !== 4) return;
     ticketStepPanels.forEach(panel => {
       const active = Number(panel.dataset.ticketStep) === step;
       panel.hidden = !active;
@@ -752,7 +759,17 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       return;
     }
-    // STEP 04 booking completion will be connected in the next task.
+    if(!bookingNumber){
+      const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const digits = "0123456789";
+      const characters = letters + digits;
+      // In-memory demo reference only; no payment or personal data is sent.
+      bookingNumber = "BSF-2026-" + letters[Math.floor(Math.random() * letters.length)]
+        + digits[Math.floor(Math.random() * digits.length)]
+        + Array.from({length:4}, () => characters[Math.floor(Math.random() * characters.length)]).join("");
+    }
+    updateCompletionSummary();
+    setTicketStep(4);
   });
   ticketPaymentForm?.addEventListener("change", () => {
     if(ticketPaymentError && ticketPaymentForm.querySelector('input[name="payment-method"]:checked')){
@@ -778,6 +795,18 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("[data-payment-total], [data-payment-button-total]").forEach(el => {
       el.textContent = total.toLocaleString("ko-KR") + "원";
     });
+  }
+
+  function updateCompletionSummary(){
+    const number = document.querySelector("[data-booking-number]");
+    if(!number) return;
+    number.textContent = bookingNumber;
+    const tickets = document.querySelector("[data-completion-tickets]");
+    tickets.replaceChildren(...[...document.querySelectorAll("[data-payment-tickets] li")].map(item => item.cloneNode(true)));
+    document.querySelector("[data-completion-qty]").textContent = getTicketQuantity() + "매";
+    const method = ticketPaymentForm.querySelector('input[name="payment-method"]:checked');
+    document.querySelector("[data-completion-method]").textContent = paymentMethodLabels[method.value];
+    document.querySelector("[data-completion-total]").textContent = totalEl.textContent;
   }
 
   function updateTicketTotal(){

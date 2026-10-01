@@ -136,6 +136,32 @@
             <p id="ticket-payment-error" class="ticket-selection-error" data-ticket-payment-error role="alert" hidden></p>
           </form>
         </div>
+        <div class="ticket-step-panel" data-ticket-step="4" hidden>
+          <div class="ticket-completion-heading">
+            <div class="ticket-completion-icon" aria-hidden="true">✓</div>
+            <h3 class="ticket-form-title" tabindex="-1" data-ticket-step-title>예매가 완료되었습니다!</h3>
+            <p class="muted">2026 부산바다축제에서 만나요.</p>
+            <div class="ticket-booking-number">예매번호<strong data-booking-number></strong></div>
+          </div>
+          <div class="ticket-completion-grid">
+            <div class="ticket-mobile-pass">
+              <div class="ticket-demo-qr" role="img" aria-label="예매 완료 모바일 티켓 QR 코드 예시">
+                <span class="ticket-demo-qr-finder"></span><span class="ticket-demo-qr-finder"></span><span class="ticket-demo-qr-finder"></span>
+              </div>
+              <strong>모바일 티켓</strong>
+              <p class="muted">현장 입장 시 예매 내역을 확인해주세요.</p>
+            </div>
+            <div class="ticket-payment-summary ticket-completion-summary">
+              <h4>예매 내역</h4>
+              <ul data-completion-tickets></ul>
+              <p>총 <strong data-completion-qty></strong></p>
+              <p>결제수단<br><strong data-completion-method></strong></p>
+              <div class="ticket-payment-total"><span>총 결제 금액</span><strong data-completion-total></strong></div>
+            </div>
+          </div>
+          <p class="ticket-completion-demo muted">본 페이지는 포트폴리오용 가상 예매 화면입니다.</p>
+          <a href="index.html" class="btn btn--orange ticket-completion-home">홈으로 돌아가기</a>
+        </div>
       </div>
 
       <aside class="summary-panel">
