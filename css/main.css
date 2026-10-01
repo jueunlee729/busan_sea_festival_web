@@ -134,7 +134,7 @@ button{cursor:pointer}
   min-height:520px;position:relative;display:flex;align-items:center;
   background:
     linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,.02)),
-    url("../프로그램/프로그램 헤더.png") center/cover no-repeat;
+    url("../assets/hero-sunset.jpg") center/cover no-repeat;
   overflow:hidden
 }
 .hero::before{
@@ -1242,4 +1242,17 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   .tab{min-width:44px;min-height:44px}
   .qty{grid-template-columns:44px 1fr 44px}
   .qty button{min-width:44px;min-height:44px}
+}
+
+
+.program-hero{
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255,250,244,.68) 0%,
+      rgba(255,247,238,.42) 28%,
+      rgba(255,244,231,.12) 48%,
+      rgba(255,255,255,0) 68%
+    ),
+    url("../assets/프로그램/프로그램 헤더.png") center / cover no-repeat;
 }
