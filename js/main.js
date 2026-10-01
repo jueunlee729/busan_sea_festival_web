@@ -699,12 +699,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const ticketStepActions = document.querySelectorAll("[data-ticket-step-actions]");
   const ticketSelectionError = document.querySelector("[data-ticket-selection-error]");
   const ticketBookerForm = document.querySelector("[data-ticket-booker-form]");
+  const ticketPaymentForm = document.querySelector("[data-ticket-payment-form]");
+  const ticketPaymentError = document.querySelector("[data-ticket-payment-error]");
 
   const getTicketQuantity = () => [...ticketOptions].reduce((sum, opt) =>
     sum + Number(opt.querySelector("[data-qty]").textContent || 0), 0);
 
   function setTicketStep(step){
-    if(step !== 1 && step !== 2) return;
+    if(step !== 1 && step !== 2 && step !== 3) return;
     ticketStepPanels.forEach(panel => {
       const active = Number(panel.dataset.ticketStep) === step;
       panel.hidden = !active;
@@ -739,8 +741,44 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   ticketBookerForm?.addEventListener("submit", event => {
     event.preventDefault();
-    // STEP 03 payment flow will be connected in the next task.
+    if(ticketBookerForm.checkValidity()) setTicketStep(3);
   });
+  ticketPaymentForm?.addEventListener("submit", event => {
+    event.preventDefault();
+    if(!ticketPaymentForm.querySelector('input[name="payment-method"]:checked')){
+      if(ticketPaymentError){
+        ticketPaymentError.hidden = false;
+        ticketPaymentError.textContent = "결제수단을 선택해주세요.";
+      }
+      return;
+    }
+    // STEP 04 booking completion will be connected in the next task.
+  });
+  ticketPaymentForm?.addEventListener("change", () => {
+    if(ticketPaymentError && ticketPaymentForm.querySelector('input[name="payment-method"]:checked')){
+      ticketPaymentError.hidden = true;
+      ticketPaymentError.textContent = "";
+    }
+  });
+
+  function updatePaymentSummary(total){
+    const list = document.querySelector("[data-payment-tickets]");
+    if(!list) return;
+    list.replaceChildren();
+    ticketOptions.forEach(opt => {
+      const qty = Number(opt.querySelector("[data-qty]").textContent || 0);
+      if(qty > 0){
+        const item = document.createElement("li");
+        item.textContent = `${opt.dataset.name} × ${qty}`;
+        list.appendChild(item);
+      }
+    });
+    const quantity = document.querySelector("[data-payment-qty]");
+    if(quantity) quantity.textContent = getTicketQuantity() + "매";
+    document.querySelectorAll("[data-payment-total], [data-payment-button-total]").forEach(el => {
+      el.textContent = total.toLocaleString("ko-KR") + "원";
+    });
+  }
 
   function updateTicketTotal(){
     let total = 0;
@@ -758,6 +796,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
     if(totalEl) totalEl.textContent = total.toLocaleString("ko-KR") + "원";
+    updatePaymentSummary(total);
     if(summaryName && firstSelected) summaryName.textContent = firstSelected.dataset.name;
     if(summaryQty){
       const qtyAll = getTicketQuantity();

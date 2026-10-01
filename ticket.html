@@ -55,8 +55,8 @@
         <div class="steps">
           <div class="step active" data-ticket-step-indicator="1" aria-current="step"><span>01</span>티켓 선택</div>
           <div class="step" data-ticket-step-indicator="2"><span>02</span>예매자 정보</div>
-          <div class="step"><span>03</span>결제하기</div>
-          <div class="step"><span>04</span>예매 완료</div>
+          <div class="step" data-ticket-step-indicator="3"><span>03</span>결제하기</div>
+          <div class="step" data-ticket-step-indicator="4"><span>04</span>예매 완료</div>
         </div>
         <div class="ticket-step-panel active" data-ticket-step="1">
         <h3 style="color:var(--navy)" tabindex="-1" data-ticket-step-title>티켓 종류 선택</h3>
@@ -108,6 +108,32 @@
               <button type="button" class="btn btn--outline" data-ticket-prev="1">‹ 이전 단계</button>
               <button type="submit" class="btn btn--orange">다음 단계 ›</button>
             </div>
+          </form>
+        </div>
+        <div class="ticket-step-panel" data-ticket-step="3" hidden>
+          <h3 class="ticket-form-title" tabindex="-1" data-ticket-step-title>결제하기</h3>
+          <p class="muted">결제수단을 선택하고 예매 내용을 확인해주세요.</p>
+          <div class="ticket-payment-summary">
+            <h4>예매 상품</h4>
+            <ul data-payment-tickets></ul>
+            <p>선택 티켓 수량 <strong data-payment-qty></strong></p>
+            <div class="ticket-payment-total"><span>총 결제 금액</span><strong data-payment-total></strong></div>
+          </div>
+          <form class="ticket-payment-form" data-ticket-payment-form>
+            <fieldset class="ticket-payment-methods">
+              <legend>결제수단 선택</legend>
+              <div class="ticket-payment-grid">
+                <label class="ticket-payment-card"><input type="radio" name="payment-method" value="card"><span><strong>신용 / 체크카드</strong><small>일반 카드 결제</small></span></label>
+                <label class="ticket-payment-card"><input type="radio" name="payment-method" value="kakao"><span><strong>카카오페이</strong><small>간편결제</small></span></label>
+                <label class="ticket-payment-card"><input type="radio" name="payment-method" value="naver"><span><strong>네이버페이</strong><small>간편결제</small></span></label>
+                <label class="ticket-payment-card"><input type="radio" name="payment-method" value="transfer"><span><strong>계좌이체</strong><small>실시간 계좌이체</small></span></label>
+              </div>
+            </fieldset>
+            <div class="ticket-form-actions ticket-payment-actions">
+              <button type="button" class="btn btn--outline" data-ticket-prev="2">‹ 이전 단계</button>
+              <button type="submit" class="btn btn--orange" aria-describedby="ticket-payment-error"><span data-payment-button-total></span> 결제하기</button>
+            </div>
+            <p id="ticket-payment-error" class="ticket-selection-error" data-ticket-payment-error role="alert" hidden></p>
           </form>
         </div>
       </div>

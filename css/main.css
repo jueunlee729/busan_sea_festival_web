@@ -535,6 +535,23 @@ body.guide-notice-popup-open{overflow:hidden}
 .ticket-form-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .ticket-form-actions .btn{min-width:0;padding:14px 8px}
 .ticket-selection-error{margin:12px 0 0;color:var(--navy);font-size:14px}
+.ticket-payment-summary{margin:28px 0;padding:20px;border:1px solid var(--border);border-radius:12px;color:var(--navy)}
+.ticket-payment-summary h4{margin:0 0 12px}
+.ticket-payment-summary ul{margin:0;padding-left:20px;overflow-wrap:anywhere}
+.ticket-payment-summary li+li{margin-top:8px}
+.ticket-payment-total{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;padding-top:16px;border-top:1px solid var(--border)}
+.ticket-payment-methods{min-width:0;margin:0;padding:0;border:0}
+.ticket-payment-methods legend{margin-bottom:16px;color:var(--navy);font-weight:700}
+.ticket-payment-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ticket-payment-card{display:flex;align-items:center;gap:12px;min-width:0;padding:18px;border:1px solid var(--border);border-radius:12px;background:#fff;color:var(--navy);cursor:pointer}
+.ticket-payment-card input{flex:0 0 auto;width:18px;height:18px;margin:0;accent-color:var(--blue)}
+.ticket-payment-card span{min-width:0;overflow-wrap:anywhere}
+.ticket-payment-card small{display:block;margin-top:4px;color:var(--muted)}
+.ticket-payment-card:has(input:checked){border-color:var(--blue);background:var(--blue-soft)}
+.ticket-payment-actions{margin-top:28px}
+@media(max-width:480px){
+  .ticket-payment-grid,.ticket-payment-actions{grid-template-columns:1fr}
+}
 .ticket-option{
   display:grid;grid-template-columns:44px 56px 1fr 110px 98px;align-items:center;gap:16px;
   border:1px solid var(--border);border-radius:12px;padding:16px
