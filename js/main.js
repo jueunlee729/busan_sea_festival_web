@@ -119,6 +119,58 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // HOME video gallery: one player, loaded only when a card is opened.
+  const homeVideoModal = document.querySelector("[data-home-video-modal]");
+  if(homeVideoModal){
+    const player = homeVideoModal.querySelector("[data-home-video-player]");
+    const title = homeVideoModal.querySelector("[data-home-video-title]");
+    const closeButton = homeVideoModal.querySelector("button[data-home-video-close]");
+    let returnFocus = null;
+
+    const closeHomeVideo = () => {
+      if(homeVideoModal.hidden) return;
+      player.pause();
+      player.currentTime = 0;
+      player.removeAttribute("src");
+      player.load();
+      homeVideoModal.hidden = true;
+      document.body.classList.remove("home-video-modal-open");
+      returnFocus?.focus();
+    };
+
+    document.querySelectorAll("[data-video-open]").forEach(card => {
+      card.addEventListener("click", () => {
+        returnFocus = document.activeElement;
+        // Card clicks also return to the card's keyboard-accessible play button.
+        if(!card.contains(returnFocus)) returnFocus = card.querySelector(".play");
+        player.src = card.dataset.videoSrc;
+        title.textContent = card.dataset.videoTitle;
+        homeVideoModal.hidden = false;
+        document.body.classList.add("home-video-modal-open");
+        closeButton.focus();
+        player.play().catch(() => {});
+      });
+    });
+    homeVideoModal.querySelectorAll("[data-home-video-close]").forEach(control => {
+      control.addEventListener("click", closeHomeVideo);
+    });
+    document.addEventListener("keydown", event => {
+      if(homeVideoModal.hidden) return;
+      if(event.key === "Escape") closeHomeVideo();
+      if(event.key === "Tab"){
+        // Keep keyboard focus within the modal while native video controls remain usable.
+        const active = document.activeElement;
+        if(event.shiftKey && active === closeButton){
+          event.preventDefault();
+          player.focus();
+        }else if(!event.shiftKey && active === player){
+          event.preventDefault();
+          closeButton.focus();
+        }
+      }
+    });
+  }
+
   // Home program slider: pointer drag, touch swipe and page indicators
   const programSlider = document.querySelector("[data-program-slider]");
   if(programSlider){
