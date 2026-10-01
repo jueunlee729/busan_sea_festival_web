@@ -1295,3 +1295,16 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
     ),
     url("../assets/뉴스/뉴스 메인헤더.png") center / cover no-repeat;
 }
+
+
+.ticket-hero{
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255,250,244,.68) 0%,
+      rgba(255,247,238,.42) 28%,
+      rgba(255,244,231,.12) 48%,
+      rgba(255,255,255,0) 68%
+    ),
+    url("../assets/티켓/티켓 메인헤더.png") center / cover no-repeat;
+}
