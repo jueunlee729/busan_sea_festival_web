@@ -878,7 +878,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     if(totalEl) totalEl.textContent = total.toLocaleString("ko-KR") + "원";
     updatePaymentSummary(total);
-    if(summaryName && firstSelected) summaryName.textContent = firstSelected.dataset.name;
+    if(summaryName){
+      summaryName.textContent = firstSelected ? firstSelected.dataset.name : "선택한 티켓 없음";
+    }
     if(summaryQty){
       const qtyAll = getTicketQuantity();
       summaryQty.textContent = qtyAll + "매";
