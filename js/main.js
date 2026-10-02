@@ -921,8 +921,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // GUIDE information card news: independent of the HOME sliders.
 document.addEventListener("DOMContentLoaded", () => {
-  const guideInfoSlider = document.querySelector(".guide-info-slider");
-  if(!guideInfoSlider) return;
+  document.querySelectorAll(".guide-info-slider").forEach(guideInfoSlider => {
   const guideInfoViewport = guideInfoSlider.querySelector(".guide-info-slider__viewport");
   const guideInfoTrack = guideInfoSlider.querySelector(".guide-info-slider__track");
   const guideInfoSlides = [...guideInfoTrack.children];
@@ -968,7 +967,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const dot = document.createElement("button");
         dot.type = "button";
         dot.className = "guide-info-slider__dot";
-        dot.setAttribute("aria-label", `안내 ${position + 1}번부터 보기`);
+        dot.setAttribute("aria-label", `${guideInfoSlider.dataset.guideInfoLabel || "안내"} ${position + 1}번부터 보기`);
         dot.addEventListener("click", () => guideInfoGoTo(position));
         guideInfoDots.append(dot);
       }
@@ -1016,4 +1015,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   window.addEventListener("resize", guideInfoResize);
   guideInfoResize();
+  });
 });
